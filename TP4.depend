@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1744274838 source:c:\users\franc\desktop\escritorio\utn\progra1\tp4\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
