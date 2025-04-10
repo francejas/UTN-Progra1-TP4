@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
         switch(selected)
         {
         case 1:
-            funcion_x();
+
             break;
 
         case 0:
