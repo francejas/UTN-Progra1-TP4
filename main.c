@@ -7,16 +7,26 @@
 
 // Prototipos de funciones
 void cargaMatrizEnteros(int matriz[ROWS][COLUMNS], int *filas, int *columnas);
-void mostrarMatriz(int matriz[ROWS][COLUMNS], int filas, int columnas);
+void mostrarMatrizEnteros(int matriz[ROWS][COLUMNS], int filas, int columnas);
+float promedioMatrizEnteros (int matriz[ROWS][COLUMNS], int filas, int columnas);
 int menu();
 
 int main(int argc, char *argv[])
 {
     int selected;
 
-    int matriz[ROWS][COLUMNS];
+    int matrizEnterosVacia[ROWS][COLUMNS];
     int filas = 0;
     int columnas = 0;
+
+    int matrizEnterosCargada[ROWS][COLUMNS]=
+    {
+        {1, 2, 3, 4},
+        {5, 6, 7, 8},
+        {9, 10, 11, 12}
+    };
+    int filasEnterosCargada=3;
+    int columnasEnterosCargada=4;
 
     do
     {
@@ -24,9 +34,39 @@ int main(int argc, char *argv[])
         switch(selected)
         {
         case 1:
-            cargaMatrizEnteros(matriz, &filas, &columnas);
+            cargaMatrizEnteros(matrizEnterosVacia, &filas, &columnas);
+            system("PAUSE");
             break;
+        case 2:
+            cargaMatrizEnteros(matrizEnterosVacia, &filas, &columnas);
+            mostrarMatrizEnteros(matrizEnterosVacia, filas, columnas);
+            system("PAUSE");
+            break;
+        case 3:
+            cargaMatrizEnterosRandom(matrizEnterosVacia,&filas, &columnas);
+            mostrarMatrizEnteros(matrizEnterosVacia, filas, columnas);
+            system("PAUSE");
+            break;
+        case 4:
+        {
+            mostrarMatrizEnteros(matrizEnterosCargada, filasEnterosCargada, columnasEnterosCargada);
+            int suma = sumarMatrizEnteros(matrizEnterosCargada, filasEnterosCargada, columnasEnterosCargada);
+            printf("La suma de todos los elementos de la matriz es: %d\n", suma);  // Añadir %d para mostrar el valor
+            system("PAUSE");
+        }
+        break;
+        case 5:
+        {
+            mostrarMatrizEnteros(matrizEnterosCargada, filasEnterosCargada, columnasEnterosCargada);
+            float promedio = promedioMatrizEnteros(matrizEnterosCargada, filasEnterosCargada, columnasEnterosCargada);
+            printf("Promedio de los elementos de la matriz: %.2f \n",promedio);
+            system("PAUSE");
+        }
+        break;
+        case 6:
 
+            system("PAUSE");
+            break;
         case 0:
             printf("\n\nTERMINATE THE PROGRAM\n");
             break;
@@ -48,67 +88,183 @@ int menu()
     printf("\nLIST MENU");
     printf("\n-----------");
     printf("\n1-Hacer una función que reciba como parámetro una matriz de números enteros y permita que el usuario ingrese valores al mismo por teclado. La función debe cargar la matriz por completo.");
+    printf("\n2- Hacer una función que reciba como parámetro una matriz de números enteros y la muestre por pantalla (en formato matricial).");
+    printf("\n3- Hacer una función que reciba como parámetro una matriz de números enteros y que cargue la misma con números aleatorios (sin intervención del usuario). La función debe cargar la matriz por completo.");
+    printf("\n4- Hacer una función tipo int que sume el contenido total de una matriz de números enteros.");
+    printf("\n5- Hacer una función tipo float que calcule el promedio de una matriz de números enteros.");
+    printf("\n6- Hacer una función que determine si un elemento se encuentra dentro de una matriz de números enteros. La función recibe la matriz y el dato a buscar.");
     printf("\n0- SALIR");
     printf("\n\nENTER YOUR CHOICE: ");
     scanf("%d",&input);
-    while(getchar() != '\n'); // Limpiar el buffer de entrada
+
     return input;
 }
 
 
+
+/*
 void cargaMatrizEnteros(int matriz[ROWS][COLUMNS], int *filas, int *columnas)
 {
     char opcion;
     int valor;
     int resultado;
 
+    // Inicializar filas y columnas a 0
+    *filas = 0;
+    *columnas = 0;
+
     printf("Ingrese un valor para cargar la matriz \n");
     printf("Ingrese f para crear una nueva fila \n");
     printf("Ingrese n/N para terminar la carga \n");
 
-    do {
+    do
+    {
         printf("Fila [%d] Columna [%d]: ", *filas, *columnas);
 
-        // Intentar leer un número entero, scanf devuelve 1 si se leyo el dato correcto
+        // Intentar leer un número entero
         resultado = scanf("%d", &valor);
 
-        if (resultado == 1) {
+        if (resultado == 1)
+        {
             // Se leyó un número correctamente
             matriz[*filas][*columnas] = valor;
             (*columnas)++;
 
             // Verificar si se alcanzó el límite de columnas
-            if (*columnas >= COLUMNS) {
+            if (*columnas >= COLUMNS)
+            {
                 printf("Se alcanzó el límite de columnas. Pasando a la siguiente fila.\n");
                 (*filas)++;
                 *columnas = 0;
             }
-        } else {
+        }
+        else
+        {
+            // Limpiar el buffer de entrada
+            while(getchar() != '\n');
 
             printf("Ingrese 'f' para nueva fila, 'n' para terminar: ");
             opcion = getchar();
+            while(getchar() != '\n'); // Limpiar el buffer después de leer el carácter
 
-            if (opcion == 'f' || opcion == 'F') {
+            if (opcion == 'f' || opcion == 'F')
+            {
                 // Crear nueva fila solo si hay datos en la fila actual
-                if (*columnas > 0) {
+                if (*columnas > 0)
+                {
                     (*filas)++;
                     *columnas = 0;
                     printf("Nueva fila iniciada.\n");
-                } else {
+                }
+                else
+                {
                     printf("La fila actual está vacía. Ingrese al menos un valor.\n");
                 }
-            } else if (opcion == 'n' || opcion == 'N') {
+            }
+            else if (opcion == 'n' || opcion == 'N')
+            {
                 printf("Carga de matriz finalizada.\n");
+                // Si hay datos en la última fila, incrementar filas para contar correctamente
+                if (*columnas > 0) {
+                    (*filas)++;
+                    *columnas = 0;
+                }
                 break;
-            } else {
+            }
+            else
+            {
                 printf("Opción no reconocida. Ingrese un número, 'f' o 'n'.\n");
             }
         }
-    } while (*filas < ROWS && *columnas < COLUMNS);
+    }
+    while (*filas < ROWS);
 
     // Verificar si se alcanzaron los límites
-    if (*filas >= ROWS || *columnas >= COLUMNS) {
+    if (*filas >= ROWS)
+    {
         printf("Se alcanzó el límite de la matriz. Carga finalizada.\n");
     }
+}
+*/
 
+
+
+void cargaMatrizEnteros(int matriz[ROWS][COLUMNS], int *filas, int *columnas)
+{
+    printf("Ingrese dimension de la matriz a cargar \n");
+    printf("Filas: ");
+    scanf("%d", filas);
+    printf("Columnas: ");
+    scanf("%d", columnas);
+
+    for(int i = 0; i < *filas; i++)
+    {
+        for(int j = 0; j < *columnas; j++)
+        {
+            printf("Fila[%d] Columna[%d]: ", i, j);
+            scanf("%d", &matriz[i][j]);
+        }
+    }
+}
+
+
+void mostrarMatrizEnteros(int matriz[ROWS][COLUMNS], int filas, int columnas)
+{
+    printf("Matriz [%d x %d]:\n", filas, columnas);
+
+    for (int i = 0; i < filas; i++)
+    {
+        printf("| ");
+        for (int j = 0; j < columnas; j++)
+        {
+            printf("%4d ", matriz[i][j]); // %4d para alinear los números
+        }
+        printf("|\n"); // Cierra la fila con | y un salto de línea
+    }
+}
+void cargaMatrizEnterosRandom(int matriz[ROWS][COLUMNS], int *filas, int *columnas)
+{
+    // Inicializar la semilla para números aleatorios
+    srand(time(NULL));
+
+    printf("Ingrese la dimension de la matriz a cargar: \n");
+    printf("Filas: ");
+    scanf("%d", filas);
+    printf("Columnas: ");
+    scanf("%d", columnas);
+
+    for(int i = 0; i < *filas; i++)
+    {
+        for(int j = 0; j < *columnas; j++)
+        {
+            matriz[i][j] = rand() % 11;  // Genera números entre 0 y 10
+        }
+    }
+}
+
+int sumarMatrizEnteros (int matriz[ROWS][COLUMNS], int filas, int columnas)
+{
+    int suma=0;
+
+    for (int i=0; i<filas; i++)
+    {
+        for(int j=0; j<columnas; j++)
+        {
+            suma+=matriz[i][j];
+        }
+    }
+
+    return suma;
+}
+
+float promedioMatrizEnteros (int matriz[ROWS][COLUMNS], int filas, int columnas)
+{
+
+    float suma=sumarMatrizEnteros(matriz,filas,columnas);
+
+    float promedio=suma/(filas*columnas) ;
+
+
+
+    return promedio;
 }
