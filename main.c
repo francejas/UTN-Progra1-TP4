@@ -3,8 +3,8 @@
 #include <time.h>
 #include <string.h>
 
-#define ROWS 50
-#define COLUMNS 50
+#define ROWS 60
+#define COLUMNS 60
 
 
 
@@ -13,6 +13,7 @@ void cargaMatrizEnteros(int matriz[ROWS][COLUMNS], int *filas, int *columnas);
 void mostrarMatrizEnteros(int matriz[ROWS][COLUMNS], int filas, int columnas);
 float promedioMatrizEnteros (int matriz[ROWS][COLUMNS], int filas, int columnas);
 int buscarElementoEnMatriz(int matriz[ROWS][COLUMNS], int filas, int columnas, int dato);
+int buscarElementoArrayString (char array[ROWS][COLUMNS], int cantidadPalabras, char dato);
 int menu();
 
 int main(int argc, char *argv[])
@@ -34,6 +35,9 @@ int main(int argc, char *argv[])
 
     char arrayPalabrasVacio[ROWS][COLUMNS];
     int cantPalabras=0;
+
+    char arrayPalabrasCargado[ROWS][COLUMNS]= {"hola","chau","gato","perro"};
+    int cantPalabrasCargado=4;
 
     do
     {
@@ -58,7 +62,7 @@ int main(int argc, char *argv[])
         {
             mostrarMatrizEnteros(matrizEnterosCargada, filasEnterosCargada, columnasEnterosCargada);
             int suma = sumarMatrizEnteros(matrizEnterosCargada, filasEnterosCargada, columnasEnterosCargada);
-            printf("La suma de todos los elementos de la matriz es: %d\n", suma);  // Añadir %d para mostrar el valor
+            printf("La suma de todos los elementos de la matriz es: %d\n", suma);  // Aï¿½adir %d para mostrar el valor
             system("PAUSE");
         }
         break;
@@ -99,6 +103,24 @@ int main(int argc, char *argv[])
             mostrarArrayPalabras(arrayPalabrasVacio,cantPalabras);
             system("PAUSE");
             break;
+        case 9:
+        {
+            char dato[COLUMNS];
+            printf("Ingrese una palabra a buscar: ");
+            scanf("%s",dato);
+            if (buscarElementoArrayString(arrayPalabrasCargado,cantPalabrasCargado,dato))
+            {
+                printf("La palabra %s se encuentra en el arreglo: /n",dato);
+                mostrarArrayPalabras(arrayPalabrasCargado,cantPalabrasCargado);
+            }
+            else
+            {
+                printf("La palabra %s NO se encuentra en el arreglo: /n",dato);
+                mostrarArrayPalabras(arrayPalabrasCargado,cantPalabrasCargado);
+            }
+            system("PAUSE");
+        }
+        break;
         case 0:
             printf("\n\nTERMINATE THE PROGRAM\n");
             break;
@@ -119,15 +141,15 @@ int menu()
     printf("\n----------");
     printf("\nLIST MENU");
     printf("\n-----------");
-    printf("\n1-Hacer una función que reciba como parámetro una matriz de números enteros y permita que el usuario ingrese valores al mismo por teclado. La función debe cargar la matriz por completo.");
-    printf("\n2- Hacer una función que reciba como parámetro una matriz de números enteros y la muestre por pantalla (en formato matricial).");
-    printf("\n3- Hacer una función que reciba como parámetro una matriz de números enteros y que cargue la misma con números aleatorios (sin intervención del usuario). La función debe cargar la matriz por completo.");
-    printf("\n4- Hacer una función tipo int que sume el contenido total de una matriz de números enteros.");
-    printf("\n5- Hacer una función tipo float que calcule el promedio de una matriz de números enteros.");
-    printf("\n6- Hacer una función que determine si un elemento se encuentra dentro de una matriz de números enteros. La función recibe la matriz y el dato a buscar.");
-    printf("\n7- Hacer una función que cargue un arreglo de palabras (strings). La función debe retornar cuantas palabras se cargaron.  (puede ser a través del parámetro como puntero).");
-    printf("\n8- Hacer una función que muestre un arreglo de palabras.");
-    printf("\n9- Hacer una función que determine si un string se encuentra dentro de un arreglo de strings. La función recibe el arreglo, la cantidad de palabras que contiene y la palabra a buscar. ///devuelve el índice de la fila en que se encuentra, de lo contrario retorna -1.");
+    printf("\n1-Hacer una funciï¿½n que reciba como parï¿½metro una matriz de nï¿½meros enteros y permita que el usuario ingrese valores al mismo por teclado. La funciï¿½n debe cargar la matriz por completo.");
+    printf("\n2- Hacer una funciï¿½n que reciba como parï¿½metro una matriz de nï¿½meros enteros y la muestre por pantalla (en formato matricial).");
+    printf("\n3- Hacer una funciï¿½n que reciba como parï¿½metro una matriz de nï¿½meros enteros y que cargue la misma con nï¿½meros aleatorios (sin intervenciï¿½n del usuario). La funciï¿½n debe cargar la matriz por completo.");
+    printf("\n4- Hacer una funciï¿½n tipo int que sume el contenido total de una matriz de nï¿½meros enteros.");
+    printf("\n5- Hacer una funciï¿½n tipo float que calcule el promedio de una matriz de nï¿½meros enteros.");
+    printf("\n6- Hacer una funciï¿½n que determine si un elemento se encuentra dentro de una matriz de nï¿½meros enteros. La funciï¿½n recibe la matriz y el dato a buscar.");
+    printf("\n7- Hacer una funciï¿½n que cargue un arreglo de palabras (strings). La funciï¿½n debe retornar cuantas palabras se cargaron.  (puede ser a travï¿½s del parï¿½metro como puntero).");
+    printf("\n8- Hacer una funciï¿½n que muestre un arreglo de palabras.");
+    printf("\n9- Hacer una funciï¿½n que determine si un string se encuentra dentro de un arreglo de strings. La funciï¿½n recibe el arreglo, la cantidad de palabras que contiene y la palabra a buscar. ///devuelve el ï¿½ndice de la fila en que se encuentra, de lo contrario retorna -1.");
     printf("\n0- SALIR");
     printf("\n\nENTER YOUR CHOICE: ");
     scanf("%d",&input);
@@ -156,19 +178,19 @@ void cargaMatrizEnteros(int matriz[ROWS][COLUMNS], int *filas, int *columnas)
     {
         printf("Fila [%d] Columna [%d]: ", *filas, *columnas);
 
-        // Intentar leer un número entero
+        // Intentar leer un nï¿½mero entero
         resultado = scanf("%d", &valor);
 
         if (resultado == 1)
         {
-            // Se leyó un número correctamente
+            // Se leyï¿½ un nï¿½mero correctamente
             matriz[*filas][*columnas] = valor;
             (*columnas)++;
 
-            // Verificar si se alcanzó el límite de columnas
+            // Verificar si se alcanzï¿½ el lï¿½mite de columnas
             if (*columnas >= COLUMNS)
             {
-                printf("Se alcanzó el límite de columnas. Pasando a la siguiente fila.\n");
+                printf("Se alcanzï¿½ el lï¿½mite de columnas. Pasando a la siguiente fila.\n");
                 (*filas)++;
                 *columnas = 0;
             }
@@ -180,7 +202,7 @@ void cargaMatrizEnteros(int matriz[ROWS][COLUMNS], int *filas, int *columnas)
 
             printf("Ingrese 'f' para nueva fila, 'n' para terminar: ");
             opcion = getchar();
-            while(getchar() != '\n'); // Limpiar el buffer después de leer el carácter
+            while(getchar() != '\n'); // Limpiar el buffer despuï¿½s de leer el carï¿½cter
 
             if (opcion == 'f' || opcion == 'F')
             {
@@ -193,13 +215,13 @@ void cargaMatrizEnteros(int matriz[ROWS][COLUMNS], int *filas, int *columnas)
                 }
                 else
                 {
-                    printf("La fila actual está vacía. Ingrese al menos un valor.\n");
+                    printf("La fila actual estï¿½ vacï¿½a. Ingrese al menos un valor.\n");
                 }
             }
             else if (opcion == 'n' || opcion == 'N')
             {
                 printf("Carga de matriz finalizada.\n");
-                // Si hay datos en la última fila, incrementar filas para contar correctamente
+                // Si hay datos en la ï¿½ltima fila, incrementar filas para contar correctamente
                 if (*columnas > 0) {
                     (*filas)++;
                     *columnas = 0;
@@ -208,16 +230,16 @@ void cargaMatrizEnteros(int matriz[ROWS][COLUMNS], int *filas, int *columnas)
             }
             else
             {
-                printf("Opción no reconocida. Ingrese un número, 'f' o 'n'.\n");
+                printf("Opciï¿½n no reconocida. Ingrese un nï¿½mero, 'f' o 'n'.\n");
             }
         }
     }
     while (*filas < ROWS);
 
-    // Verificar si se alcanzaron los límites
+    // Verificar si se alcanzaron los lï¿½mites
     if (*filas >= ROWS)
     {
-        printf("Se alcanzó el límite de la matriz. Carga finalizada.\n");
+        printf("Se alcanzï¿½ el lï¿½mite de la matriz. Carga finalizada.\n");
     }
 }
 */
@@ -252,14 +274,14 @@ void mostrarMatrizEnteros(int matriz[ROWS][COLUMNS], int filas, int columnas)
         printf("| ");
         for (int j = 0; j < columnas; j++)
         {
-            printf("%4d ", matriz[i][j]); // %4d para alinear los números
+            printf("%4d ", matriz[i][j]); // %4d para alinear los nï¿½meros
         }
         printf("|\n");
     }
 }
 void cargaMatrizEnterosRandom(int matriz[ROWS][COLUMNS], int *filas, int *columnas)
 {
-    // Inicializar la semilla para números aleatorios
+    // Inicializar la semilla para nï¿½meros aleatorios
     srand(time(NULL));
 
     printf("Ingrese la dimension de la matriz a cargar: \n");
@@ -272,7 +294,7 @@ void cargaMatrizEnterosRandom(int matriz[ROWS][COLUMNS], int *filas, int *column
     {
         for(int j = 0; j < *columnas; j++)
         {
-            matriz[i][j] = rand() % 11;  // Genera números entre 0 y 10
+            matriz[i][j] = rand() % 11;  // Genera nï¿½meros entre 0 y 10
         }
     }
 }
@@ -326,7 +348,7 @@ int buscarElementoEnMatriz(int matriz[ROWS][COLUMNS], int filas, int columnas, i
 // COLUMNS es la cantidad de caracteres
 int cargarArrayStings(char array[ROWS][COLUMNS], int *cantPalabras)
 {
-    // Definir tamaño del arreglo, va a guardar una palabra y COLUMNS es el maximo de caracteres
+    // Definir tamaï¿½o del arreglo, va a guardar una palabra y COLUMNS es el maximo de caracteres
     char palabra[COLUMNS];
     *cantPalabras = 0; // Inicializar contador
 
@@ -362,13 +384,28 @@ int cargarArrayStings(char array[ROWS][COLUMNS], int *cantPalabras)
     return *cantPalabras; // Retornar cantidad de palabras cargadas
 }
 
-void mostrarArrayPalabras(char array[ROWS][COLUMNS], int cantPalabras) {
+void mostrarArrayPalabras(char array[ROWS][COLUMNS], int cantPalabras)
+{
     printf("\nArreglo de palabras (%d palabras):\n", cantPalabras);
     printf("---------------------------\n");
 
-    for (int i = 0; i < cantPalabras; i++) {
+    for (int i = 0; i < cantPalabras; i++)
+    {
         printf("%d: %s\n", i + 1, array[i]);
     }
 
     printf("---------------------------\n");
+}
+
+int buscarElementoArrayString (char array[ROWS][COLUMNS], int cantidadPalabras, char dato)
+{
+    int flag=0;
+    for(int i=0;i<cantidadPalabras;i++){
+        if (strcmp(array[i],dato)){
+            flag=1;
+        };
+    }
+
+
+    return flag;
 }
