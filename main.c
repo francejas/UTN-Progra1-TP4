@@ -9,6 +9,7 @@
 void cargaMatrizEnteros(int matriz[ROWS][COLUMNS], int *filas, int *columnas);
 void mostrarMatrizEnteros(int matriz[ROWS][COLUMNS], int filas, int columnas);
 float promedioMatrizEnteros (int matriz[ROWS][COLUMNS], int filas, int columnas);
+int buscarElementoEnMatriz(int matriz[ROWS][COLUMNS], int filas, int columnas, int dato);
 int menu();
 
 int main(int argc, char *argv[])
@@ -63,9 +64,24 @@ int main(int argc, char *argv[])
             system("PAUSE");
         }
         break;
-        case 6:
-
+        case 6:{
+            int dato=0;
+            printf("Ingrese un dato a buscar en la matriz: ");
+            scanf("%d",&dato);
+            if(buscarElementoEnMatriz(matrizEnterosCargada,filasEnterosCargada,columnasEnterosCargada,dato)){
+                printf("El elemento: %d se encuentra en la matriz. \n",dato);
+                mostrarMatrizEnteros(matrizEnterosCargada, filasEnterosCargada, columnasEnterosCargada);
+            } else{
+                printf("El elemento: %d NO se encuentra en la matriz. \n",dato);
+                mostrarMatrizEnteros(matrizEnterosCargada, filasEnterosCargada, columnasEnterosCargada);
+            }
             system("PAUSE");
+        }
+            break;
+            case 7:{
+
+                system("PAUSE");
+            }
             break;
         case 0:
             printf("\n\nTERMINATE THE PROGRAM\n");
@@ -93,6 +109,7 @@ int menu()
     printf("\n4- Hacer una función tipo int que sume el contenido total de una matriz de números enteros.");
     printf("\n5- Hacer una función tipo float que calcule el promedio de una matriz de números enteros.");
     printf("\n6- Hacer una función que determine si un elemento se encuentra dentro de una matriz de números enteros. La función recibe la matriz y el dato a buscar.");
+    printf("\n7- Hacer una función que cargue un arreglo de palabras (strings). La función debe retornar cuantas palabras se cargaron.  (puede ser a través del parámetro como puntero).");
     printf("\n0- SALIR");
     printf("\n\nENTER YOUR CHOICE: ");
     scanf("%d",&input);
@@ -267,4 +284,19 @@ float promedioMatrizEnteros (int matriz[ROWS][COLUMNS], int filas, int columnas)
 
 
     return promedio;
+}
+
+int buscarElementoEnMatriz(int matriz[ROWS][COLUMNS], int filas, int columnas, int dato){
+    int flag=0;
+
+    for(int i =0;i<filas;i++){
+        for(int j=0;j<columnas;j++){
+            if (dato==matriz[i][j]){
+                flag=1;
+            }
+        }
+    }
+
+
+    return flag;
 }
