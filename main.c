@@ -13,7 +13,7 @@ void cargaMatrizEnteros(int matriz[ROWS][COLUMNS], int *filas, int *columnas);
 void mostrarMatrizEnteros(int matriz[ROWS][COLUMNS], int filas, int columnas);
 float promedioMatrizEnteros (int matriz[ROWS][COLUMNS], int filas, int columnas);
 int buscarElementoEnMatriz(int matriz[ROWS][COLUMNS], int filas, int columnas, int dato);
-int buscarElementoArrayString (char array[ROWS][COLUMNS], int cantidadPalabras, char dato);
+int buscarElementoArrayString (char array[ROWS][COLUMNS], int cantidadPalabras, char dato[]);
 int menu();
 
 int main(int argc, char *argv[])
@@ -107,16 +107,18 @@ int main(int argc, char *argv[])
         {
             char dato[COLUMNS];
             printf("Ingrese una palabra a buscar: ");
-            scanf("%s",dato);
-            if (buscarElementoArrayString(arrayPalabrasCargado,cantPalabrasCargado,dato))
+            scanf("%s", dato);
+
+            int respuesta = buscarElementoArrayString(arrayPalabrasCargado, cantPalabrasCargado, dato);
+            if(respuesta == -1)
             {
-                printf("La palabra %s se encuentra en el arreglo: /n",dato);
-                mostrarArrayPalabras(arrayPalabrasCargado,cantPalabrasCargado);
+                printf("La palabra %s NO se encuentra en el arreglo: \n", dato);
+                mostrarArrayPalabras(arrayPalabrasCargado, cantPalabrasCargado);
             }
             else
             {
-                printf("La palabra %s NO se encuentra en el arreglo: /n",dato);
-                mostrarArrayPalabras(arrayPalabrasCargado,cantPalabrasCargado);
+                printf("La palabra '%s' se encuentra en el arreglo en la posicion %d: \n", dato, respuesta);
+                mostrarArrayPalabras(arrayPalabrasCargado, cantPalabrasCargado);
             }
             system("PAUSE");
         }
@@ -397,15 +399,16 @@ void mostrarArrayPalabras(char array[ROWS][COLUMNS], int cantPalabras)
     printf("---------------------------\n");
 }
 
-int buscarElementoArrayString (char array[ROWS][COLUMNS], int cantidadPalabras, char dato)
+int buscarElementoArrayString (char array[ROWS][COLUMNS], int cantidadPalabras, char dato[])
 {
-    int flag=0;
-    for(int i=0;i<cantidadPalabras;i++){
-        if (strcmp(array[i],dato)){
-            flag=1;
-        };
+    int posicion=-1;
+    for(int i=0; i<cantidadPalabras; i++)
+    {
+        if (strcmp(array[i],dato)==0)
+        {
+            posicion=i+1;
+        }
     }
 
-
-    return flag;
+    return posicion;
 }
