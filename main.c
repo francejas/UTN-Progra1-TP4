@@ -123,6 +123,22 @@ int main(int argc, char *argv[])
             system("PAUSE");
         }
         break;
+        case 10:
+        {
+
+            system("PAUSE");
+        }
+        break;
+        case 11:
+        {
+            printf("Arreglo desordenado: \n");
+            mostrarArrayPalabras(arrayPalabrasCargado, cantPalabrasCargado);
+            printf("Arreglo ordenado por Insercion: \n");
+            ordenarPalabrasInsercion(arrayPalabrasCargado,cantPalabrasCargado);
+            mostrarArrayPalabras(arrayPalabrasCargado, cantPalabrasCargado);
+            system("PAUSE");
+        }
+        break;
         case 0:
             printf("\n\nTERMINATE THE PROGRAM\n");
             break;
@@ -152,6 +168,8 @@ int menu()
     printf("\n7- Hacer una funci�n que cargue un arreglo de palabras (strings). La funci�n debe retornar cuantas palabras se cargaron.  (puede ser a trav�s del par�metro como puntero).");
     printf("\n8- Hacer una funci�n que muestre un arreglo de palabras.");
     printf("\n9- Hacer una funci�n que determine si un string se encuentra dentro de un arreglo de strings. La funci�n recibe el arreglo, la cantidad de palabras que contiene y la palabra a buscar. ///devuelve el �ndice de la fila en que se encuentra, de lo contrario retorna -1.");
+    printf("\n10- Hacer una función que determine si un string se encuentra dentro de un arreglo de strings ordenado alfabéticamente. La función recibe el arreglo, la cantidad de palabras que contiene y el string a buscar.  ///devuelve el índice de la fila en que se encuentra, de lo contrario retorna -1");
+    printf("\n11- Hacer una función (o varias) que ordene un arreglo de palabras por orden alfabético. (Por selección o inserción, el que más te guste).");
     printf("\n0- SALIR");
     printf("\n\nENTER YOUR CHOICE: ");
     scanf("%d",&input);
@@ -411,4 +429,45 @@ int buscarElementoArrayString (char array[ROWS][COLUMNS], int cantidadPalabras, 
     }
 
     return posicion;
+}
+
+// NO ENTIENDOOOOOOO
+
+/*
+void ordenarPalabrasInsercion(char array[ROWS][COLUMNS], int cantidadPalabras)
+{
+
+    int u=0;
+    while(u<cantidadPalabras-1)
+    {
+        insertar(array,u,array[u+1]);
+        u++;
+    }
+
+
+}
+*/
+void ordenarPalabrasInsercion(char array[ROWS][COLUMNS], int cantidadPalabras)
+{
+    for (int u = 0; u < cantidadPalabras - 1; u++)
+    {
+        char dato[COLUMNS];
+        strcpy(dato, array[u + 1]);  // Copiar antes de mover datos
+        insertar(array, u, dato);
+    }
+}
+
+void insertar(char array[ROWS][COLUMNS], int u, char dato[])
+{
+    int i=u;
+    //strcoll();#include <string.h>
+    //Comparar dos strings, devuelve un int, cero (0) si son iguales, menor que cero (0) si el primero es menor que el segundo y mayor que cero (0) si el primero es mayor que el segundo.
+//Usar strcoll(...) == -1 es incorrecto. strcoll puede devolver cualquier número negativo, no necesariamente -1, cuando dato < array[i].
+    while (i >= 0 && strcoll(dato, array[i]) < 0)
+    {
+        strcpy(array[i+1], array[i]);
+        i--;
+
+    }
+     strcpy(array[i+1], dato);
 }
