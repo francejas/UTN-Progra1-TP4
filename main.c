@@ -39,6 +39,14 @@ int main(int argc, char *argv[])
     char arrayPalabrasCargado[ROWS][COLUMNS]= {"hola","chau","gato","perro"};
     int cantPalabrasCargado=4;
 
+    int matriz2x2[ROWS][COLUMNS]=
+    {
+        {2,4},
+        {1,2}
+    };
+    int filasMatriz2x2=2;
+    int columMatriz2x2=2;
+
     do
     {
         selected = menu();
@@ -139,6 +147,25 @@ int main(int argc, char *argv[])
             system("PAUSE");
         }
         break;
+        case 12:
+            printf("Determinante de la matriz 2x2 \n");
+            mostrarMatrizEnteros(matriz2x2,filasMatriz2x2,columMatriz2x2);
+            int determinante=determinanteMatriz2x2(matriz2x2,filasMatriz2x2,columMatriz2x2);
+            printf("Determinante: %d \n",determinante);
+            system("PAUSE");
+            break;
+        case 13:
+            printf("La matriz: \n");
+            mostrarMatrizEnteros(matriz2x2,filasMatriz2x2,columMatriz2x2);
+            int inversa=tieneInversa(matriz2x2,filasMatriz2x2,columMatriz2x2);
+
+            if (inversa==-1){
+                printf("La matriz NO tiene inversa \n");
+            }else
+            printf("La matriz tiene inversa \n");
+
+        system("PAUSE");
+        break;
         case 0:
             printf("\n\nTERMINATE THE PROGRAM\n");
             break;
@@ -170,6 +197,8 @@ int menu()
     printf("\n9- Hacer una funci�n que determine si un string se encuentra dentro de un arreglo de strings. La funci�n recibe el arreglo, la cantidad de palabras que contiene y la palabra a buscar. ///devuelve el �ndice de la fila en que se encuentra, de lo contrario retorna -1.");
     printf("\n10- Hacer una función que determine si un string se encuentra dentro de un arreglo de strings ordenado alfabéticamente. La función recibe el arreglo, la cantidad de palabras que contiene y el string a buscar.  ///devuelve el índice de la fila en que se encuentra, de lo contrario retorna -1");
     printf("\n11- Hacer una función (o varias) que ordene un arreglo de palabras por orden alfabético. (Por selección o inserción, el que más te guste).");
+    printf("\n12- Hacer una función que retorne el determinante de una matriz de 2x2.");
+    printf("\n13- Función que verifique si una matriz de 2x2 tiene inversa.");
     printf("\n0- SALIR");
     printf("\n\nENTER YOUR CHOICE: ");
     scanf("%d",&input);
@@ -469,5 +498,60 @@ void insertar(char array[ROWS][COLUMNS], int u, char dato[])
         i--;
 
     }
-     strcpy(array[i+1], dato);
+    strcpy(array[i+1], dato);
+}
+
+int determinanteMatriz2x2(int matriz[ROWS][COLUMNS], int filas, int columnas)
+{
+
+    int determinante=0;
+    int a=0;
+    int b=0;
+    int c=0;
+    int d=0;
+
+    for(int i=0; i<filas; i++)
+    {
+
+        for(int j=0; j<columnas; j++)
+        {
+            if (i==0 && j==0)
+            {
+                a=matriz[i][j];
+            }
+            if (i==0&&j==1)
+            {
+                b=matriz[i][j];
+            }
+            if (i==1&&j==0)
+            {
+                c=matriz[i][j];
+            }
+            if (i==1&&j==1)
+            {
+                d=matriz[i][j];
+            }
+
+        }
+    }
+
+    determinante=(a*d)-(b*c);
+
+
+    return determinante;
+}
+
+int tieneInversa(int matriz[ROWS][COLUMNS], int filas, int columnas)
+{
+    int inversa=0;
+
+    int determinante=determinanteMatriz2x2(matriz,filas,columnas);
+
+    if(determinante==0)
+    {
+        inversa=-1;
+    }
+
+    return inversa;
+
 }
